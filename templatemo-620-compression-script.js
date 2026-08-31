@@ -1,72 +1,85 @@
-/*
-   COMPRESSION — TM-620
-   https://templatemo.com/tm-620-compression
-   Design: TemplateMo
-   
-   Scroll reveal with IntersectionObserver
-   + 3-second setTimeout fallback for iframe preview contexts
-*/
+window.addEventListener('load', () => {
+    const loader = document.getElementById('intro-loader');
+    const introImg = document.querySelector('.intro-img');
+    const introText = document.querySelector('.intro-text');
+    const targetImg = document.getElementById('panel1-img');
+    const panel1 = document.getElementById('panel1'); 
 
-(function () {
-    'use strict';
+    // Lock the page during animation
+    document.body.style.pointerEvents = 'none';
+    targetImg.style.opacity = '0';
 
-    // Scroll reveal for mobile stacked layout
-    const panels = document.querySelectorAll('article.panel');
+    // Fade the text out early
+    setTimeout(() => {
+        if(introText) introText.style.opacity = '0';
+    }, 1800); 
 
-    function revealPanel(el) {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-    }
+    setTimeout(() => {
+        loader.style.backgroundColor = 'transparent';
 
-    // Only apply scroll reveal in mobile (stacked) layout
-    function initScrollReveal() {
-        if (window.innerWidth > 900) return;
+        const targetRect = targetImg.getBoundingClientRect();
+        const introRect = introImg.getBoundingClientRect();
 
-        panels.forEach(function (panel) {
-            panel.style.opacity = '0';
-            panel.style.transform = 'translateY(20px)';
-            panel.style.transition = 'opacity 0.6s cubic-bezier(0.77, 0, 0.175, 1), transform 0.6s cubic-bezier(0.77, 0, 0.175, 1)';
-        });
+        // Lock intro image to fixed positioning at its exact current spot
+        introImg.style.position = 'fixed';
+        introImg.style.margin = '0'; 
+        introImg.style.top = `${introRect.top}px`;
+        introImg.style.left = `${introRect.left}px`;
+        introImg.style.width = `${introRect.width}px`;
+        introImg.style.height = `${introRect.height}px`;
+        introImg.style.borderRadius = '50%'; 
+        
+        introImg.offsetHeight; // Force browser layout recalculation
 
-        if ('IntersectionObserver' in window) {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        revealPanel(entry.target);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
+        // SIMULTANEOUS FLIGHT AND MORPH TRANSITION
+        introImg.style.transition = 'top 1s cubic-bezier(0.25, 1, 0.5, 1), left 1s cubic-bezier(0.25, 1, 0.5, 1), width 1s cubic-bezier(0.25, 1, 0.5, 1), height 1s cubic-bezier(0.25, 1, 0.5, 1), border-radius 1s ease-in-out';
+        
+        introImg.style.top = `${targetRect.top}px`;
+        introImg.style.left = `${targetRect.left}px`;
+        introImg.style.width = `${targetRect.width}px`;
+        introImg.style.height = `${targetRect.height}px`;
+        introImg.style.borderRadius = getComputedStyle(targetImg).borderRadius || '0px';
 
-            panels.forEach(function (panel) {
-                observer.observe(panel);
-            });
-        }
+        // SWAP, UNLOCK, & AUTO-EXPAND
+        setTimeout(() => {
+            targetImg.style.opacity = '1';
+            loader.style.display = 'none';
+            
+            // Completely strip the pointer-events lock so the body goes back to normal
+            document.body.style.pointerEvents = '';
 
-        // 3-second fallback for iframe preview contexts
-        setTimeout(function () {
-            panels.forEach(function (panel) {
-                revealPanel(panel);
-            });
-        }, 3000);
-    }
-
-    // Close modal on Escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && window.location.hash) {
-            window.location.hash = '';
-        }
-    });
-
-    // Close modal when clicking overlay background
-    document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
-        overlay.addEventListener('click', function (e) {
-            if (e.target === overlay) {
-                window.location.hash = '';
+            // Auto-expand Panel 1
+            if (panel1) {
+                panel1.classList.add('is-active');
             }
-        });
-    });
 
-    // Init
-    document.addEventListener('DOMContentLoaded', initScrollReveal);
-})();
+        }, 1000); 
+
+    }, 2500); 
+});
+
+// ULTIMATE CLICK-TO-EXPAND LOGIC
+document.addEventListener('click', (e) => {
+    // Find the closest panel to wherever the user clicked
+    const clickedPanel = e.target.closest('.panel');
+    
+    // If they didn't click inside a panel, do nothing
+    if (!clickedPanel) return;
+
+    // If they clicked a button or a link inside the panel, let that link work normally!
+    if (e.target.closest('a')) return;
+
+    // Stop the click from accidentally triggering anything else in the background
+    e.stopPropagation();
+
+    // Check if the clicked panel is already expanded
+    const isActive = clickedPanel.classList.contains('is-active');
+
+    // Collapse all panels first
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('is-active'));
+
+    // Expand the clicked panel if it wasn't already open
+    if (!isActive) {
+        clickedPanel.classList.add('is-active');
+    }
+});

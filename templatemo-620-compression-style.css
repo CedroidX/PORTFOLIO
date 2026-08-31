@@ -32,6 +32,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -43,7 +44,60 @@ body {
     width: 100%;
 }
 
-/* --- THE TRACK --- */
+/* ===========================================
+   INTRO LOADER
+   =========================================== */
+#intro-loader {
+    position: fixed;
+    inset: 0;
+    background-color: var(--carbon);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: background-color 1s ease-in-out;
+}
+
+.intro-content {
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.intro-text {
+    transition: opacity 0.5s ease-out;
+        font-family: var(--font-mono);
+}
+
+.intro-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 10000;
+}
+
+.intro-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--off-white);
+}
+
+.intro-content p {
+    font-size: 1.2rem;
+    color: var(--ash);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===========================================
+   THE TRACK & PANELS
+   =========================================== */
 main.track {
     display: flex;
     width: 100%;
@@ -52,15 +106,18 @@ main.track {
     gap: 0;
 }
 
-/* --- THE SLICES --- */
 article.panel {
     flex: 1;
     position: relative;
-    overflow: hidden;
+    overflow: hidden !important; /* Prevents invisible content from blocking siblings */
     cursor: pointer;
+    pointer-events: auto !important;
     border-right: 1px solid var(--seam);
     border-radius: 0;
+    z-index: 1 !important;
     transition: flex var(--duration) var(--ease-heavy);
+    transform-origin: left center;
+    animation: sliceIn 1s var(--ease-heavy) both;
 }
 
 article.panel:last-child {
@@ -136,10 +193,10 @@ article.panel:last-child {
     line-height: 1;
     white-space: nowrap;
     opacity: 1;
+    pointer-events: none !important; /* Ensures vertical text doesn't block clicks */
     transition:
         opacity 0.4s var(--ease-heavy),
         transform 0.4s var(--ease-heavy);
-    pointer-events: none;
 }
 
 /* --- THE DETAILS --- */
@@ -155,6 +212,12 @@ article.panel:last-child {
         opacity 0.5s var(--ease-heavy) 0.15s,
         transform 0.5s var(--ease-heavy) 0.15s;
     pointer-events: none;
+}
+
+.details a {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 10;
 }
 
 .details__category {
@@ -256,38 +319,30 @@ article.panel:last-child {
 }
 
 /* ===========================================
-   COMPRESSION ENGINE — HOVER STATES
+   COMPRESSION ENGINE — ACTIVE STATES
    =========================================== */
-
-main.track:hover > article.panel {
-    flex: 1;
-}
-
-main.track > article.panel:hover {
+main.track > article.panel.is-active {
     flex: 6;
+    z-index: 2 !important;
 }
 
-article.panel:hover .panel__bg img {
+article.panel.is-active .panel__bg img {
     filter: brightness(0.85) grayscale(0%);
     transform: scale(1);
 }
 
-article.panel:hover .spine {
+article.panel.is-active .spine {
     opacity: 0.2;
     transform: translateX(-50%) rotate(180deg) translateY(-20px);
 }
 
-article.panel:hover .details {
+article.panel.is-active .details {
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
 }
 
-main.track:hover > article.panel .panel__index {
-    opacity: 0;
-}
-
-article.panel:hover .panel__index {
+article.panel.is-active .panel__index {
     opacity: 0.35 !important;
 }
 
@@ -639,11 +694,6 @@ article.panel:hover .panel__index {
 @keyframes fadeUp {
     0% { opacity: 0; transform: translateY(12px); }
     100% { opacity: 1; transform: translateY(0); }
-}
-
-article.panel {
-    transform-origin: left center;
-    animation: sliceIn 1s var(--ease-heavy) both;
 }
 
 article.panel:nth-child(1) { animation-delay: 0.05s; }
