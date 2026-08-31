@@ -204,14 +204,15 @@ article.panel:last-child {
     position: absolute;
     bottom: 48px;
     left: 48px;
-    right: 48px;
+    right: auto !important; /* Prevents container from stretching horizontally */
+    width: 480px !important; /* Locks text layout so it NEVER changes height or reflows */
+    max-width: calc(100vw - 96px);
     z-index: 10;
-    opacity: 0;
-    transform: translateX(-30px);
-    transition:
-        opacity 0.5s var(--ease-heavy) 0.15s,
-        transform 0.5s var(--ease-heavy) 0.15s;
+    opacity: 0 !important;
+    transform: scale(0.95) !important;
+    transform-origin: bottom left !important; /* Prevents vertical shift during scale */
     pointer-events: none;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out !important; 
 }
 
 .details a {
@@ -332,14 +333,18 @@ article.panel.is-active .panel__bg img {
 }
 
 article.panel.is-active .spine {
-    opacity: 0.2;
-    transform: translateX(-50%) rotate(180deg) translateY(-20px);
+    opacity: 0 !important; 
+    /* -120px pushes it visually DOWN below the screen */
+    transform: translateX(-50%) rotate(180deg) translateY(-120px) scale(0.8) !important; 
+    transition: opacity 0.3s ease-out, transform 0.4s var(--ease-heavy) !important; 
 }
 
 article.panel.is-active .details {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    transform-origin: bottom left !important;
+    pointer-events: auto !important;
+    transition: opacity 0.8s var(--ease-heavy), transform 0.8s var(--ease-heavy) !important; 
 }
 
 article.panel.is-active .panel__index {
@@ -685,30 +690,80 @@ article.panel.is-active .panel__index {
     background: rgba(240, 240, 240, 0.3);
 }
 
-/* --- ENTRANCE ANIMATION --- */
-@keyframes sliceIn {
-    0% { transform: scaleX(0); opacity: 0; }
-    100% { transform: scaleX(1); opacity: 1; }
+/* --- INTRO SEQUENCE LOCK --- */
+body.intro-animating #panel1 .spine,
+body.intro-animating #panel1 .details,
+body.intro-animating #panel1 .panel__index,
+body.intro-animating #panel1 .global-header {
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
-@keyframes fadeUp {
-    0% { opacity: 0; transform: translateY(12px); }
-    100% { opacity: 1; transform: translateY(0); }
+body.intro-animating #panel1 .details {
+    transform: scale(0.95) !important;
+    transform-origin: bottom left !important;
+    transition: none !important; 
 }
 
-article.panel:nth-child(1) { animation-delay: 0.05s; }
-article.panel:nth-child(2) { animation-delay: 0.15s; }
-article.panel:nth-child(3) { animation-delay: 0.25s; }
-article.panel:nth-child(4) { animation-delay: 0.35s; }
-article.panel:nth-child(5) { animation-delay: 0.45s; }
+body.intro-animating #panel1 .spine {
+    transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
+}
+
+/* --- HEADER & FOOTER LOCK --- */
+body.hide-ui .global-header,
+body.hide-ui .global-footer {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(20px) !important;
+}
+
+/* NEW: Overrides the panel's pointer events so they cannot be clicked early */
+body.hide-ui .panel,
+body.hide-ui .details a {
+    pointer-events: none !important;
+    cursor: default !important;
+}
 
 .global-header,
 .global-footer {
-    animation: fadeUp 0.6s var(--ease-heavy) 0.7s both;
+    transition: opacity 0.8s var(--ease-heavy), transform 0.8s var(--ease-heavy) !important;
 }
 
+body.intro-animating .details {
+    transform: translateY(60px) !important; /* Pushed down */
+}
+
+body.intro-animating .spine {
+    /* Because the spine is rotated 180deg, negative Y pushes it down relative to the screen */
+    transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
+}
+
+/* Ensure smooth sliding transitions for the spine */
 .spine {
-    animation: fadeUp 0.5s var(--ease-heavy) backwards;
+    transition: opacity 0.6s var(--ease-heavy), transform 0.6s var(--ease-heavy) !important;
+}
+
+/* --- THE SPINE --- */
+.spine {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg) translateY(0);
+    z-index: 10;
+    writing-mode: vertical-rl;
+    font-family: var(--font-spine);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    text-transform: uppercase;
+    color: var(--off-white);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 1;
+    pointer-events: none !important;
+    /* Waits 0.2s for the panel to shrink, then uses a cubic-bezier for a springy bounce */
+    transition: 
+        opacity 0.4s ease-in 0.2s, 
+        transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s !important;
 }
 
 article.panel:nth-child(1) .spine { animation-delay: 0.6s; }
@@ -809,4 +864,44 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* --- SHOCKWAVE CASCADE EFFECT --- */
+
+/* 1. Initial Hidden State */
+.panel.is-hidden-content .panel__bg {
+    opacity: 0 !important;
+    filter: blur(20px) brightness(2) !important;
+    transform: scale(1.15) !important;
+}
+
+.panel.is-hidden-content .spine {
+    opacity: 0 !important;
+    /* Starts pushed down so it can slide UP */
+    transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
+}
+
+.panel.is-hidden-content .panel__index {
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(-20px) !important;
+}
+
+/* 2. The Reveal Animation */
+.panel.shockwave-reveal .panel__bg {
+    opacity: 1 !important;
+    filter: brightness(0.4) grayscale(100%) !important;
+    transform: scale(1.05) !important;
+    transition: opacity 0.8s ease-out, filter 1s ease-out, transform 1s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.panel.shockwave-reveal .spine {
+    opacity: 1 !important;
+    transform: translateX(-50%) rotate(180deg) translateY(0) !important;
+    transition: opacity 0.6s ease-out 0.2s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.2s !important;
+}
+
+.panel.shockwave-reveal .panel__index {
+    opacity: 0.35 !important;
+    transform: translateX(-50%) translateY(0) !important;
+    transition: opacity 0.6s ease-out 0.3s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s !important;
 }
