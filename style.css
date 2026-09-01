@@ -1,10 +1,3 @@
-/* ============================================
-   COMPRESSION — CSS-Only Kinetic Portfolio
-   TM-620
-   https://templatemo.com/tm-620-compression
-   Design: TemplateMo
-   ============================================ */
-
 *,
 *::before,
 *::after {
@@ -264,7 +257,7 @@ article.panel:last-child {
 }
 
 .details__meta-label {
-    color: var(--steel);
+    color: white;
     text-transform: uppercase;
     display: block;
     margin-bottom: 4px;
@@ -584,10 +577,27 @@ article.panel.is-active .panel__index {
     border-bottom: 1px solid rgba(74, 74, 74, 0.3);
     font-family: var(--font-mono);
     font-size: 0.75rem;
+    cursor: pointer; /* Forces the hand icon so it feels clickable */
+    transition: background 0.4s ease, padding 0.4s var(--ease-heavy);
 }
 
 .modal__project-list li:first-child {
     border-top: 1px solid rgba(74, 74, 74, 0.3);
+}
+
+/* --- THE HOVER STATE --- */
+.modal__project-list li:hover {
+    /* Subtle neon gradient that fades into transparency on the right */
+    background: linear-gradient(90deg, rgba(223, 255, 0, 0.1) 0%, transparent 80%);
+    /* Nudges the text inward to create a kinetic "indented" feel */
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* Lights up the project name text when the row is hovered */
+.modal__project-list li:hover .modal__project-name {
+    color: var(--neon-chartreuse);
+    transition: color 0.3s ease;
 }
 
 .modal__project-name {
@@ -904,4 +914,33 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
     opacity: 0.35 !important;
     transform: translateX(-50%) translateY(0) !important;
     transition: opacity 0.6s ease-out 0.3s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s !important;
+}
+
+/* ===========================================
+   INTERACTIVE HOVER FEEDBACK
+   =========================================== */
+/* Only triggers AFTER the intro (.hide-ui is removed) and only on unexpanded panels */
+
+/* 1. The image blooms into full color and zooms slightly */
+body:not(.hide-ui) article.panel:not(.is-active):hover .panel__bg img {
+    filter: brightness(0.65) grayscale(0%) !important;
+    transform: scale(1.02) !important;
+    transition: filter 0.4s ease-out, transform 0.4s ease-out !important;
+}
+
+/* 2. The vertical spine text slides UP and lights up */
+body:not(.hide-ui) article.panel:not(.is-active):hover .spine {
+    /* Because it is rotated 180deg, positive translateY visually pushes it UP */
+    transform: translateX(-50%) rotate(180deg) translateY(30px) !important;
+    color: var(--neon-chartreuse) !important;
+    opacity: 1 !important;
+    transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* 3. The top index number also nudges up to match the kinetic energy */
+body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
+    transform: translateX(-50%) translateY(-10px) !important;
+    color: var(--neon-chartreuse) !important;
+    opacity: 0.8 !important;
+    transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
 }

@@ -9,14 +9,23 @@ window.addEventListener('load', () => {
     document.body.classList.add('intro-animating');
     document.body.classList.add('hide-ui');
     document.body.style.pointerEvents = 'none';
+    
+    // Prep the real panel image to be hidden and pitch black
     targetImg.style.opacity = '0';
+    targetImg.style.filter = 'brightness(0)';
+    targetImg.style.transition = 'opacity 0.8s ease, filter 0.8s ease';
 
     // Hide Panels 2-5 immediately on load
     const otherPanels = document.querySelectorAll('.panel:not(#panel1)');
     otherPanels.forEach(p => p.classList.add('is-hidden-content'));
 
+    // --- NEW TIMING: Fade text and drain image to black BEFORE flight ---
     setTimeout(() => {
         if(introText) introText.style.opacity = '0';
+        
+        // Turns the image pure black while it is still sitting in the center
+        introImg.style.transition = 'filter 0.5s ease-in-out';
+        introImg.style.filter = 'brightness(0)';
     }, 1800); 
 
     setTimeout(() => {
@@ -35,21 +44,26 @@ window.addEventListener('load', () => {
         
         introImg.offsetHeight; 
 
-        // SIMULTANEOUS FLIGHT AND MORPH TRANSITION
-        introImg.style.transition = 'top 1s cubic-bezier(0.25, 1, 0.5, 1), left 1s cubic-bezier(0.25, 1, 0.5, 1), width 1s cubic-bezier(0.25, 1, 0.5, 1), height 1s cubic-bezier(0.25, 1, 0.5, 1), border-radius 1s ease-in-out, filter 1s ease-in-out';
+        // FLIGHT TRANSITION (Image is already black here)
+        introImg.style.transition = 'top 1s cubic-bezier(0.25, 1, 0.5, 1), left 1s cubic-bezier(0.25, 1, 0.5, 1), width 1s cubic-bezier(0.25, 1, 0.5, 1), height 1s cubic-bezier(0.25, 1, 0.5, 1), border-radius 1s ease-in-out';
         
         introImg.style.top = `${targetRect.top}px`;
         introImg.style.left = `${targetRect.left}px`;
         introImg.style.width = `${targetRect.width}px`;
         introImg.style.height = `${targetRect.height}px`;
         introImg.style.borderRadius = getComputedStyle(targetImg).borderRadius || '0px';
-        introImg.style.filter = 'brightness(0.4) grayscale(100%)';
 
         // SWAP AND TRIGGER NEW TIMING SEQUENCE
         setTimeout(() => {
+            // Reveal the real image from the black void
             targetImg.style.opacity = '1';
+            targetImg.style.filter = ''; // Fades from black to normal gray
+            
+            setTimeout(() => {
+                targetImg.style.transition = '';
+            }, 800);
+            
             loader.style.display = 'none';
-            // Note: Clicks are STILL locked here!
 
             // --- FIRE THE SHOCKWAVE EFFECT ---
             otherPanels.forEach((panel, index) => {
@@ -66,16 +80,14 @@ window.addEventListener('load', () => {
 
             // --- EXPAND PANEL 1 AFTER THE WAVE PASSES ---
             setTimeout(() => {
-                // Release text animations so they slide up
                 document.body.classList.remove('intro-animating');
                 
                 if (panel1) panel1.classList.add('is-active');
 
                 // --- FINAL UNLOCK (After Panel 1 finishes expanding) ---
-                // Panel expansion takes 0.8s (800ms) in your CSS
                 setTimeout(() => {
-                    document.body.style.pointerEvents = ''; // Unlocks all clicks
-                    document.body.classList.remove('hide-ui'); // Fades in Header & Footer
+                    document.body.style.pointerEvents = '';
+                    document.body.classList.remove('hide-ui');
                 }, 800);
 
             }, 700);
@@ -87,7 +99,7 @@ window.addEventListener('load', () => {
 
 // ULTIMATE CLICK-TO-EXPAND LOGIC
 document.addEventListener('click', (e) => {
-    // --- MASTER LOCK: Ignore all clicks until the intro finishes and UI appears ---
+    // Master Lock
     if (document.body.classList.contains('hide-ui')) {
         e.preventDefault();
         e.stopPropagation();
