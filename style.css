@@ -57,8 +57,63 @@ body {
 }
 
 .intro-text {
-    transition: opacity 0.5s ease-out;
-        font-family: var(--font-mono);
+    /* Removed the group transition so label and dots can move independently */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.loading-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; 
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin: 0;
+    transform: scale(0.7); 
+    transform-origin: center bottom;
+    /* Transition added here so only the text fades initially */
+    transition: opacity 0.4s ease-out; 
+}
+
+.loading-dots {
+    display: flex;
+    gap: 8px;
+    /* Prepares the container for the absorption flight */
+    transition: transform 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 0.5s ease-in;
+}
+
+.loading-dots span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(240, 240, 240, 0.15); 
+    transition: background 0.1s ease-out, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.loading-dots span.is-loaded {
+    background: var(--neon-chartreuse);
+    transform: scale(1.2); 
+    box-shadow: 0 0 8px rgba(223, 255, 0, 0.4); 
+}
+
+/* --- THE ABSORPTION EFFECTS --- */
+
+/* 1. Turns dots black, kills the glow, and EXPANDS them to collide and merge */
+.loading-dots.is-black span {
+    background: #000 !important;
+    box-shadow: none !important;
+    transform: scale(3) !important; /* Grows the dots so they overlap into one liquid blob */
+    /* Smooth, rubbery easing so the merging feels fluid */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease-in-out, box-shadow 0.4s ease-in-out !important;
+}
+
+/* 2. Sucks the merged black liquid blob upward into the image and shrinks it */
+.loading-dots.is-absorbed {
+    transform: translateY(-100px) scale(0) !important;
+    opacity: 0;
 }
 
 .intro-img {
@@ -310,6 +365,19 @@ article.panel:last-child {
 
 .btn-view:hover svg {
     transform: translateX(4px);
+}
+
+/* --- SMALL BUTTON MODIFIER --- */
+.btn-view.btn-view--small {
+    padding: 8px 16px;       /* Tighter padding so it isn't so bulky */
+    font-size: 0.65rem;      /* Scaled down text */
+    gap: 8px;                /* Less space between text and the arrow */
+    margin-top: 4px;         /* Gives it a tiny bit of breathing room */
+}
+
+.btn-view.btn-view--small svg {
+    width: 12px;             /* Shrinks the arrow icon to match */
+    height: 12px;
 }
 
 /* ===========================================
@@ -943,4 +1011,23 @@ body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
     color: var(--neon-chartreuse) !important;
     opacity: 0.8 !important;
     transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* ===========================================
+   INDIVIDUAL PROJECT MODALS
+   =========================================== */
+/* Keeps the project modal hidden by default, but ready */
+.project-modal {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 9999 !important; /* Forces it above the #work modal */
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Forces it to appear exactly like your work modal when clicked */
+.project-modal.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
