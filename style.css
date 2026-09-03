@@ -485,7 +485,7 @@ article.panel.is-active .panel__index {
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(26, 26, 26, 0.92);
+    background: rgba(0, 0, 0, 0.900);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -714,6 +714,66 @@ article.panel.is-active .panel__index {
 
 .modal__contact-value a:hover {
     border-color: var(--neon-chartreuse);
+}
+
+.modal__image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.modal__image-grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1080;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--steel);
+}
+
+/* Container for image + text */
+.modal__grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Forces images inside the wrapper to keep the 1920x1080 lock */
+.modal__grid-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1080;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--steel);
+}
+
+/* The small caption directly under the images (e.g., "Main Menu") */
+.modal__image-caption {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--steel);
+    text-align: center;
+    margin: 0;
+}
+
+/* Specific styling for the 'More Contents' titles */
+.modal__grid-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--off-white);
+    font-weight: 700;
+    margin: 4px 0 0 0;
+}
+
+/* Specific styling for the 'More Contents' descriptions */
+.modal__grid-desc {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(240, 240, 240, 0.6);
+    line-height: 1.6;
+    margin: 0;
 }
 
 /* --- BOTTOM STRIP --- */
@@ -1030,4 +1090,16 @@ body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+}
+
+/* Forces the inner content to appear when triggered by JS */
+.project-modal.is-active .modal__content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+    .modal__image-grid {
+        grid-template-columns: 1fr;
+    }
 }
