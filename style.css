@@ -637,16 +637,28 @@ article.panel.is-active .panel__index {
     padding: 0;
 }
 
+/* Stacks the contents of each list item vertically */
 .modal__project-list li {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(74, 74, 74, 0.3);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    cursor: pointer; /* Forces the hand icon so it feels clickable */
-    transition: background 0.4s ease, padding 0.4s var(--ease-heavy);
+    flex-direction: column;
+    margin-bottom: 24px; /* Space between each project block */
+    cursor: pointer;
+}
+
+/* Styles the cover photo */
+.modal__project-cover {
+    width: 100%;
+    height: 180px; /* Adjust height to fit your design */
+    object-fit: cover; /* Prevents the images from stretching or squishing */
+    border-radius: 8px; /* Optional: rounds the image corners */
+    margin-bottom: 12px; /* Creates a gap between the image and the text */
+    display: block;
+}
+
+/* Optional: Add a slight hover effect to the images to make them feel interactive */
+.modal__project-list li:hover .modal__project-cover {
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .modal__project-list li:first-child {
