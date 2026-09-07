@@ -12,8 +12,7 @@
     --graphite: #2C2C2C;
     --steel: #4A4A4A;
     --ash: #6B6B6B;
-    --neon-chartreuse: #DFFF00;
-    --seam: #111111;
+--neon-gold: #FFD700; /* Replaced --neon-gold */    --seam: #111111;
     --font-spine: 'Anton', sans-serif;
     --font-mono: 'Space Mono', monospace;
     --ease-heavy: cubic-bezier(0.77, 0, 0.175, 1);
@@ -57,11 +56,12 @@ body {
 }
 
 .intro-text {
-    /* Removed the group transition so label and dots can move independently */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    /* Added transition to fade the entire container at once */
+    transition: opacity 0.5s ease-out; 
 }
 
 .loading-label {
@@ -80,8 +80,6 @@ body {
 .loading-dots {
     display: flex;
     gap: 8px;
-    /* Prepares the container for the absorption flight */
-    transition: transform 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 0.5s ease-in;
 }
 
 .loading-dots span {
@@ -89,31 +87,32 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(240, 240, 240, 0.15); 
-    transition: background 0.1s ease-out, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    background: var(--neon-gold);
+    opacity: 0.2;
+    /* Hardware acceleration for older PCs */
+    will-change: opacity, transform; 
+    animation: pulseDots 1.2s infinite ease-in-out;
 }
 
-.loading-dots span.is-loaded {
-    background: var(--neon-chartreuse);
-    transform: scale(1.2); 
-    box-shadow: 0 0 8px rgba(223, 255, 0, 0.4); 
-}
+/* Stagger the animation via CSS instead of JavaScript */
+.loading-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+.loading-dots span:nth-child(4) { animation-delay: 0.6s; }
+.loading-dots span:nth-child(5) { animation-delay: 0.8s; }
 
-/* --- THE ABSORPTION EFFECTS --- */
-
-/* 1. Turns dots black, kills the glow, and EXPANDS them to collide and merge */
-.loading-dots.is-black span {
-    background: #000 !important;
-    box-shadow: none !important;
-    transform: scale(3) !important; /* Grows the dots so they overlap into one liquid blob */
-    /* Smooth, rubbery easing so the merging feels fluid */
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease-in-out, box-shadow 0.4s ease-in-out !important;
-}
-
-/* 2. Sucks the merged black liquid blob upward into the image and shrinks it */
-.loading-dots.is-absorbed {
-    transform: translateY(-100px) scale(0) !important;
-    opacity: 0;
+@keyframes pulseDots {
+    0%, 100% { 
+        opacity: 0.2; 
+        transform: scale(1); 
+        box-shadow: none;
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2); 
+        /* Updated box-shadow to Gold RGB */
+        box-shadow: 0 0 6px rgba(255, 215, 0, 0.5); 
+    }
 }
 
 .intro-img {
@@ -274,7 +273,7 @@ article.panel:last-child {
     font-size: 0.65rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--neon-chartreuse);
+    color: var(--neon-gold);
     margin-bottom: 12px;
     display: flex;
     align-items: center;
@@ -286,7 +285,7 @@ article.panel:last-child {
     display: inline-block;
     width: 24px;
     height: 1px;
-    background: var(--neon-chartreuse);
+    background: var(--neon-gold);
 }
 
 .details__title {
@@ -336,7 +335,7 @@ article.panel:last-child {
     align-items: center;
     gap: 10px;
     padding: 14px 32px;
-    background: var(--neon-chartreuse);
+    background: var(--neon-gold);
     color: var(--carbon);
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -448,7 +447,7 @@ article.panel.is-active .panel__index {
 }
 
 .logo span {
-    color: var(--neon-chartreuse);
+    color: var(--neon-gold);
     font-weight: 400;
 }
 
@@ -474,8 +473,8 @@ article.panel.is-active .panel__index {
 }
 
 .nav a:hover {
-    color: var(--neon-chartreuse);
-    border-color: rgba(223, 255, 0, 0.3);
+    color: var(--neon-gold);
+border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
 }
 
 /* ===========================================
@@ -533,8 +532,8 @@ article.panel.is-active .panel__index {
 }
 
 .modal__close:hover {
-    border-color: var(--neon-chartreuse);
-    color: var(--neon-chartreuse);
+    border-color: var(--neon-gold);
+    color: var(--neon-gold);
 }
 
 .modal__content {
@@ -574,7 +573,7 @@ article.panel.is-active .panel__index {
     font-size: 0.6rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--neon-chartreuse);
+    color: var(--neon-gold);
     margin-bottom: 24px;
     display: flex;
     align-items: center;
@@ -586,7 +585,7 @@ article.panel.is-active .panel__index {
     display: inline-block;
     width: 32px;
     height: 1px;
-    background: var(--neon-chartreuse);
+    background: var(--neon-gold);
 }
 
 .modal__heading {
@@ -620,7 +619,7 @@ article.panel.is-active .panel__index {
 }
 
 .modal__text a:hover {
-    border-color: var(--neon-chartreuse);
+    border-color: var(--neon-gold);
 }
 
 .modal__divider {
@@ -667,26 +666,27 @@ article.panel.is-active .panel__index {
 
 /* --- THE HOVER STATE --- */
 .modal__project-list li:hover {
-    /* Subtle neon gradient that fades into transparency on the right */
-    background: linear-gradient(90deg, rgba(223, 255, 0, 0.1) 0%, transparent 80%);
-    /* Nudges the text inward to create a kinetic "indented" feel */
+    /* Updated gradient to Gold RGB */
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 80%);
     padding-left: 16px;
     padding-right: 16px;
 }
 
 /* Lights up the project name text when the row is hovered */
 .modal__project-list li:hover .modal__project-name {
-    color: var(--neon-chartreuse);
+    color: var(--neon-gold);
     transition: color 0.3s ease;
 }
 
 .modal__project-name {
+    font-family: var(--font-mono); /* Added font family */
     color: var(--off-white);
     font-weight: 700;
     letter-spacing: 0.05em;
 }
 
 .modal__project-year {
+    font-family: var(--font-mono); /* Added font family */
     color: var(--steel);
     font-size: 0.65rem;
     letter-spacing: 0.1em;
@@ -725,7 +725,7 @@ article.panel.is-active .panel__index {
 }
 
 .modal__contact-value a:hover {
-    border-color: var(--neon-chartreuse);
+    border-color: var(--neon-gold);
 }
 
 .modal__image-grid {
@@ -1072,7 +1072,7 @@ body:not(.hide-ui) article.panel:not(.is-active):hover .panel__bg img {
 body:not(.hide-ui) article.panel:not(.is-active):hover .spine {
     /* Because it is rotated 180deg, positive translateY visually pushes it UP */
     transform: translateX(-50%) rotate(180deg) translateY(30px) !important;
-    color: var(--neon-chartreuse) !important;
+    color: var(--neon-gold) !important;
     opacity: 1 !important;
     transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
 }
@@ -1080,7 +1080,7 @@ body:not(.hide-ui) article.panel:not(.is-active):hover .spine {
 /* 3. The top index number also nudges up to match the kinetic energy */
 body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
     transform: translateX(-50%) translateY(-10px) !important;
-    color: var(--neon-chartreuse) !important;
+    color: var(--neon-gold) !important;
     opacity: 0.8 !important;
     transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
 }

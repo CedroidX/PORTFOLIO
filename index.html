@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMPRESSION — Portfolio</title>
-    <meta name="description" content="Compression is a free kinetic portfolio HTML CSS template with CSS-only expanding panels, industrial dark theme, and modal popups.">
+    <title>CEDILLA - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -16,16 +15,15 @@
 <div id="intro-loader">
     <div class="intro-content">
         <!-- Image stays outside the text div so it doesn't fade out -->
-        <img src="Panel1img/pianome.jpg" alt="John Cedrick Abad Cedilla" class="intro-img">
+        <img src="Panel1img/pianome.jpg" alt="" class="intro-img">
         
-        <!-- Both text and dots are inside intro-text so they fade out together -->
-        <div class="intro-text">
-            <p class="loading-label">Loading: Preparing Portfolio</p>
-            <div class="loading-dots">
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-        </div>
+<!-- Both text and dots are inside intro-text so they fade out together -->
+<div class="intro-text">
+    <p class="loading-label">Loading: Preparing Portfolio</p>
+    <div class="loading-dots">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+</div>
     </div>
 </div>
 
@@ -71,7 +69,7 @@
             I have experience in game programming, game design, sound design, and gameplay development. 
             I am passionate about creating engaging gaming experiences and continuously improving my skills in the game development industry.</p>
         <a href="#about" class="btn-view">
-            About Me
+            Work & Education
             <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
@@ -168,7 +166,7 @@
             </div>
         </div>
         <p class="details__description">Beyond game development, I have a deep passion for music, actively playing both the guitar and electric piano. I also enjoy hands-on tinkering—from disassembling mechanical keyboards and PCs to performing automotive diagnostics and maintenance on my cars. On more laid-back days, you'll find me doing street photography to capture local urban narratives or hanging out at cat cafes.</p>
-        <a href="#" class="btn-view">
+        <a href="#interest" class="btn-view">
             Check it out
             <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -204,7 +202,7 @@
             </div>
         </div>
         <p class="details__description">When I am not writing code or designing game mechanics, I love exploring new environments—whether that means traveling around Southeast Asia to places like Singapore and Malaysia, hitting the indoor ice skating rink, or joining local events like the Grab SuperTakbo. I am also an active part of the local gaming community, frequently attending conventions to support and connect with fellow developers.</p>
-        <a href="#" class="btn-view">
+        <a href="#more" class="btn-view">
             View Gallery
             <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -246,17 +244,17 @@
                     <span class="modal__project-year">2025 | Hack & Slash / Action / Adventure </span>
                 </li>
                 <li data-target="modal-sakay">
-                    <img src="Panel3img/bg.png" alt="Sakay NA! Cover" class="modal__project-cover">
+                    <img src="Panel2img/Sakayna.png" alt="Sakay NA! Cover" class="modal__project-cover">
                     <span class="modal__project-name">Sakay NA!</span>
                     <span class="modal__project-year">2026 | Rhythm / Story</span>
                 </li>
                 <li data-target="modal-rizal">
-                    <img src="path/to/rizal-cover.jpg" alt="Ako Si Rizal Cover" class="modal__project-cover">
+                    <img src="Panel2img/rizalcover.png" alt="Ako Si Rizal Cover" class="modal__project-cover">
                     <span class="modal__project-name">Ako Si Rizal</span>
                     <span class="modal__project-year">2024 | Interactive Story </span>
                 </li>
                 <li data-target="modal-didon">
-                    <img src="path/to/didon-cover.jpg" alt="Didon Cover" class="modal__project-cover">
+                    <img src="Panel2img/didonbg.png" alt="Didon Cover" class="modal__project-cover">
                     <span class="modal__project-name">Didon: Off-beat Grubbin</span>
                     <span class="modal__project-year">2024 | 2D Sidescroller / Rhythm </span>
                 </li>
@@ -369,6 +367,70 @@
                 <div class="modal__contact-item">
                     <p class="modal__contact-label">Discord</p>
                     <p class="modal__contact-value"><a href="https://discord.com/users/@cedroidx" target="_blank" rel="noopener noreferrer">Cedroid</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interest Modal -->
+    <div id="interest" class="modal-overlay">
+        <a href="#" class="modal__close" aria-label="Close">&times;</a>
+        <div class="modal__content">
+            <p class="modal__label">Interest</p>
+            <h2 class="modal__heading">Hobbies &<br>Stuffs</h2>
+            <p class="modal__text">A deeper dive into my life outside of game development, including music, hardware modding, and automotive diagnostics.</p>
+            <hr class="modal__divider">
+            
+            <div class="modal__image-grid">
+                <div class="modal__grid-item">
+                    <!-- Replace src with your actual images -->
+                    <img src="images/placeholder.jpg" alt="Music">
+                    <h3 class="modal__grid-title">Music</h3>
+                    <p class="modal__grid-desc">Playing the guitar and electric piano, and experimenting with audio composition.</p>
+                </div>
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Tech & Hardware">
+                    <h3 class="modal__grid-title">Hardware Modding</h3>
+                    <p class="modal__grid-desc">Tinkering with and disassembling mechanical keyboards and custom PC builds.</p>
+                </div>
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Automotive">
+                    <h3 class="modal__grid-title">Automotive</h3>
+                    <p class="modal__grid-desc">Performing hands-on maintenance and diagnostics on cars.</p>
+                </div>
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Photography">
+                    <h3 class="modal__grid-title">Photography</h3>
+                    <p class="modal__grid-desc">Capturing local urban narratives through street photography.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- More Modal -->
+    <div id="more" class="modal-overlay">
+        <a href="#" class="modal__close" aria-label="Close">&times;</a>
+        <div class="modal__content">
+            <p class="modal__label">Life</p>
+            <h2 class="modal__heading">Beyond<br>The Screen</h2>
+            <p class="modal__text">Exploring new environments, staying active, and engaging with the local game development community.</p>
+            <hr class="modal__divider">
+            
+            <div class="modal__image-grid">
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Travels">
+                    <h3 class="modal__grid-title">Travels</h3>
+                    <p class="modal__grid-desc">Exploring Southeast Asia, including memorable trips to Singapore and Malaysia.</p>
+                </div>
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Events">
+                    <h3 class="modal__grid-title">Community Events</h3>
+                    <p class="modal__grid-desc">Attending conventions like PGDX to support fellow developers.</p>
+                </div>
+                <div class="modal__grid-item">
+                    <img src="images/placeholder.jpg" alt="Active Lifestyle">
+                    <h3 class="modal__grid-title">Active Lifestyle</h3>
+                    <p class="modal__grid-desc">Hitting the indoor ice skating rink and participating in local runs like Grab SuperTakbo.</p>
                 </div>
             </div>
         </div>

@@ -5,8 +5,7 @@ window.addEventListener('load', () => {
     const panel1 = document.getElementById('panel1'); 
     
     // 1. Lock the text, UI, and all mouse clicks globally
-    document.body.classList.add('intro-animating');
-    document.body.classList.add('hide-ui');
+    document.body.classList.add('intro-animating', 'hide-ui');
     document.body.style.pointerEvents = 'none';
     
     // Prep the real panel image to be hidden and pitch black
@@ -18,31 +17,16 @@ window.addEventListener('load', () => {
     const otherPanels = document.querySelectorAll('.panel:not(#panel1)');
     otherPanels.forEach(p => p.classList.add('is-hidden-content'));
 
-    // --- STAGGER THE DOTS ---
-    const loadingDots = document.querySelectorAll('.loading-dots span');
-    loadingDots.forEach((dot, index) => {
-        setTimeout(() => {
-            dot.classList.add('is-loaded');
-        }, index * 300); // 300ms delay per dot (finishes at 2.7 seconds)
-    });
-
-    // --- STAGE 1: Turn text transparent, image black, and dots black ---
+    // --- STAGE 1: Fade out text and dots together, turn image black ---
     setTimeout(() => {
-        const loadingLabel = document.querySelector('.loading-label');
-        const dotsContainer = document.querySelector('.loading-dots');
+        const introText = document.querySelector('.intro-text');
         
-        if (loadingLabel) loadingLabel.style.opacity = '0'; // Fade out "LOADING" text
-        if (dotsContainer) dotsContainer.classList.add('is-black'); // Turn dots black
+        // Fades both the "Loading" label and the dots simultaneously
+        if (introText) introText.style.opacity = '0'; 
         
         introImg.style.transition = 'filter 0.5s ease-in-out';
         introImg.style.filter = 'brightness(0)';
     }, 3200);
-
-    // --- STAGE 2: Absorb the black dots into the black image ---
-    setTimeout(() => {
-        const dotsContainer = document.querySelector('.loading-dots');
-        if (dotsContainer) dotsContainer.classList.add('is-absorbed'); // Sucks dots upward
-    }, 3600); // Happens 400ms after they turn black
 
     // --- STAGE 3: Take Flight ---
     setTimeout(() => {
