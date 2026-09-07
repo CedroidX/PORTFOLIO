@@ -12,7 +12,8 @@
     --graphite: #2C2C2C;
     --steel: #4A4A4A;
     --ash: #6B6B6B;
---neon-gold: #FFD700; /* Replaced --neon-gold */    --seam: #111111;
+    --neon-gold: #FFD700;
+    --seam: #111111;
     --font-spine: 'Anton', sans-serif;
     --font-mono: 'Space Mono', monospace;
     --ease-heavy: cubic-bezier(0.77, 0, 0.175, 1);
@@ -36,9 +37,7 @@ body {
     width: 100%;
 }
 
-/* ===========================================
-   INTRO LOADER
-   =========================================== */
+/* Intro Loader */
 #intro-loader {
     position: fixed;
     inset: 0;
@@ -60,7 +59,6 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    /* Added transition to fade the entire container at once */
     transition: opacity 0.5s ease-out; 
 }
 
@@ -73,7 +71,6 @@ body {
     margin: 0;
     transform: scale(0.7); 
     transform-origin: center bottom;
-    /* Transition added here so only the text fades initially */
     transition: opacity 0.4s ease-out; 
 }
 
@@ -89,12 +86,10 @@ body {
     border-radius: 50%;
     background: var(--neon-gold);
     opacity: 0.2;
-    /* Hardware acceleration for older PCs */
     will-change: opacity, transform; 
     animation: pulseDots 1.2s infinite ease-in-out;
 }
 
-/* Stagger the animation via CSS instead of JavaScript */
 .loading-dots span:nth-child(1) { animation-delay: 0s; }
 .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
 .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
@@ -110,7 +105,6 @@ body {
     50% { 
         opacity: 1; 
         transform: scale(1.2); 
-        /* Updated box-shadow to Gold RGB */
         box-shadow: 0 0 6px rgba(255, 215, 0, 0.5); 
     }
 }
@@ -142,9 +136,7 @@ body {
     to { opacity: 1; }
 }
 
-/* ===========================================
-   THE TRACK & PANELS
-   =========================================== */
+/* Track & Panels */
 main.track {
     display: flex;
     width: 100%;
@@ -156,7 +148,7 @@ main.track {
 article.panel {
     flex: 1;
     position: relative;
-    overflow: hidden !important; /* Prevents invisible content from blocking siblings */
+    overflow: hidden !important;
     cursor: pointer;
     pointer-events: auto !important;
     border-right: 1px solid var(--seam);
@@ -207,7 +199,6 @@ article.panel:last-child {
     transition: opacity var(--duration) var(--ease-heavy);
 }
 
-/* Panel index */
 .panel__index {
     position: absolute;
     top: 42px;
@@ -224,7 +215,6 @@ article.panel:last-child {
     white-space: nowrap;
 }
 
-/* --- THE SPINE --- */
 .spine {
     position: absolute;
     bottom: 60px;
@@ -240,24 +230,23 @@ article.panel:last-child {
     line-height: 1;
     white-space: nowrap;
     opacity: 1;
-    pointer-events: none !important; /* Ensures vertical text doesn't block clicks */
+    pointer-events: none !important;
     transition:
         opacity 0.4s var(--ease-heavy),
         transform 0.4s var(--ease-heavy);
 }
 
-/* --- THE DETAILS --- */
 .details {
     position: absolute;
     bottom: 48px;
     left: 48px;
-    right: auto !important; /* Prevents container from stretching horizontally */
-    width: 480px !important; /* Locks text layout so it NEVER changes height or reflows */
+    right: auto !important;
+    width: 480px !important;
     max-width: calc(100vw - 96px);
     z-index: 10;
     opacity: 0 !important;
     transform: scale(0.95) !important;
-    transform-origin: bottom left !important; /* Prevents vertical shift during scale */
+    transform-origin: bottom left !important;
     pointer-events: none;
     transition: opacity 0.2s ease-out, transform 0.2s ease-out !important; 
 }
@@ -366,22 +355,19 @@ article.panel:last-child {
     transform: translateX(4px);
 }
 
-/* --- SMALL BUTTON MODIFIER --- */
 .btn-view.btn-view--small {
-    padding: 8px 16px;       /* Tighter padding so it isn't so bulky */
-    font-size: 0.65rem;      /* Scaled down text */
-    gap: 8px;                /* Less space between text and the arrow */
-    margin-top: 4px;         /* Gives it a tiny bit of breathing room */
+    padding: 8px 16px;       
+    font-size: 0.65rem;      
+    gap: 8px;                
+    margin-top: 4px;         
 }
 
 .btn-view.btn-view--small svg {
-    width: 12px;             /* Shrinks the arrow icon to match */
+    width: 12px;             
     height: 12px;
 }
 
-/* ===========================================
-   COMPRESSION ENGINE — ACTIVE STATES
-   =========================================== */
+/* Compression Engine - Active States */
 main.track > article.panel.is-active {
     flex: 6;
     z-index: 2 !important;
@@ -394,7 +380,6 @@ article.panel.is-active .panel__bg img {
 
 article.panel.is-active .spine {
     opacity: 0 !important; 
-    /* -120px pushes it visually DOWN below the screen */
     transform: translateX(-50%) rotate(180deg) translateY(-120px) scale(0.8) !important; 
     transition: opacity 0.3s ease-out, transform 0.4s var(--ease-heavy) !important; 
 }
@@ -411,9 +396,7 @@ article.panel.is-active .panel__index {
     opacity: 0.35 !important;
 }
 
-/* ===========================================
-   GLOBAL HEADER
-   =========================================== */
+/* Global Header */
 .global-header {
     position: fixed;
     top: 0;
@@ -474,12 +457,10 @@ article.panel.is-active .panel__index {
 
 .nav a:hover {
     color: var(--neon-gold);
-border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
+    border-color: rgba(255, 215, 0, 0.3);
 }
 
-/* ===========================================
-   CSS-ONLY MODALS (:target)
-   =========================================== */
+/* Modals */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -630,31 +611,27 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     border: none;
 }
 
-/* Work modal — project list */
 .modal__project-list {
     list-style: none;
     padding: 0;
 }
 
-/* Stacks the contents of each list item vertically */
 .modal__project-list li {
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px; /* Space between each project block */
+    margin-bottom: 24px; 
     cursor: pointer;
 }
 
-/* Styles the cover photo */
 .modal__project-cover {
     width: 100%;
-    height: 180px; /* Adjust height to fit your design */
-    object-fit: cover; /* Prevents the images from stretching or squishing */
-    border-radius: 8px; /* Optional: rounds the image corners */
-    margin-bottom: 12px; /* Creates a gap between the image and the text */
+    height: 180px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+    margin-bottom: 12px; 
     display: block;
 }
 
-/* Optional: Add a slight hover effect to the images to make them feel interactive */
 .modal__project-list li:hover .modal__project-cover {
     opacity: 0.9;
     transition: opacity 0.2s ease-in-out;
@@ -664,35 +641,31 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     border-top: 1px solid rgba(74, 74, 74, 0.3);
 }
 
-/* --- THE HOVER STATE --- */
 .modal__project-list li:hover {
-    /* Updated gradient to Gold RGB */
     background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 80%);
     padding-left: 16px;
     padding-right: 16px;
 }
 
-/* Lights up the project name text when the row is hovered */
 .modal__project-list li:hover .modal__project-name {
     color: var(--neon-gold);
     transition: color 0.3s ease;
 }
 
 .modal__project-name {
-    font-family: var(--font-mono); /* Added font family */
+    font-family: var(--font-mono); 
     color: var(--off-white);
     font-weight: 700;
     letter-spacing: 0.05em;
 }
 
 .modal__project-year {
-    font-family: var(--font-mono); /* Added font family */
+    font-family: var(--font-mono); 
     color: var(--steel);
     font-size: 0.65rem;
     letter-spacing: 0.1em;
 }
 
-/* Contact modal — grid */
 .modal__contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -744,14 +717,12 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     border: 1px solid var(--steel);
 }
 
-/* Container for image + text */
 .modal__grid-item {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* Forces images inside the wrapper to keep the 1920x1080 lock */
 .modal__grid-item img {
     width: 100%;
     height: auto;
@@ -761,7 +732,6 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     border: 1px solid var(--steel);
 }
 
-/* The small caption directly under the images (e.g., "Main Menu") */
 .modal__image-caption {
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -770,7 +740,6 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     margin: 0;
 }
 
-/* Specific styling for the 'More Contents' titles */
 .modal__grid-title {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -779,7 +748,6 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     margin: 4px 0 0 0;
 }
 
-/* Specific styling for the 'More Contents' descriptions */
 .modal__grid-desc {
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -788,7 +756,6 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     margin: 0;
 }
 
-/* --- BOTTOM STRIP --- */
 .global-footer {
     position: fixed;
     bottom: 0;
@@ -840,7 +807,6 @@ border-color: rgba(255, 215, 0, 0.3); /* Updated to Gold RGB */
     background: rgba(240, 240, 240, 0.3);
 }
 
-/* --- INTRO SEQUENCE LOCK --- */
 body.intro-animating #panel1 .spine,
 body.intro-animating #panel1 .details,
 body.intro-animating #panel1 .panel__index,
@@ -859,7 +825,6 @@ body.intro-animating #panel1 .spine {
     transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
 }
 
-/* --- HEADER & FOOTER LOCK --- */
 body.hide-ui .global-header,
 body.hide-ui .global-footer {
     opacity: 0 !important;
@@ -867,7 +832,6 @@ body.hide-ui .global-footer {
     transform: translateY(20px) !important;
 }
 
-/* NEW: Overrides the panel's pointer events so they cannot be clicked early */
 body.hide-ui .panel,
 body.hide-ui .details a {
     pointer-events: none !important;
@@ -880,20 +844,17 @@ body.hide-ui .details a {
 }
 
 body.intro-animating .details {
-    transform: translateY(60px) !important; /* Pushed down */
+    transform: translateY(60px) !important; 
 }
 
 body.intro-animating .spine {
-    /* Because the spine is rotated 180deg, negative Y pushes it down relative to the screen */
     transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
 }
 
-/* Ensure smooth sliding transitions for the spine */
 .spine {
     transition: opacity 0.6s var(--ease-heavy), transform 0.6s var(--ease-heavy) !important;
 }
 
-/* --- THE SPINE --- */
 .spine {
     position: absolute;
     bottom: 60px;
@@ -910,7 +871,6 @@ body.intro-animating .spine {
     white-space: nowrap;
     opacity: 1;
     pointer-events: none !important;
-    /* Waits 0.2s for the panel to shrink, then uses a cubic-bezier for a springy bounce */
     transition: 
         opacity 0.4s ease-in 0.2s, 
         transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s !important;
@@ -922,7 +882,7 @@ article.panel:nth-child(3) .spine { animation-delay: 0.8s; }
 article.panel:nth-child(4) .spine { animation-delay: 0.9s; }
 article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
 
-/* --- RESPONSIVE --- */
+/* Responsive Options */
 @media (max-width: 900px) {
     main.track {
         flex-direction: column;
@@ -1016,9 +976,7 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
     }
 }
 
-/* --- SHOCKWAVE CASCADE EFFECT --- */
-
-/* 1. Initial Hidden State */
+/* Shockwave Cascade Effect */
 .panel.is-hidden-content .panel__bg {
     opacity: 0 !important;
     filter: blur(20px) brightness(2) !important;
@@ -1027,7 +985,6 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
 
 .panel.is-hidden-content .spine {
     opacity: 0 !important;
-    /* Starts pushed down so it can slide UP */
     transform: translateX(-50%) rotate(180deg) translateY(-60px) !important;
 }
 
@@ -1036,7 +993,6 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
     transform: translateX(-50%) translateY(-20px) !important;
 }
 
-/* 2. The Reveal Animation */
 .panel.shockwave-reveal .panel__bg {
     opacity: 1 !important;
     filter: brightness(0.4) grayscale(100%) !important;
@@ -1056,28 +1012,20 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
     transition: opacity 0.6s ease-out 0.3s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s !important;
 }
 
-/* ===========================================
-   INTERACTIVE HOVER FEEDBACK
-   =========================================== */
-/* Only triggers AFTER the intro (.hide-ui is removed) and only on unexpanded panels */
-
-/* 1. The image blooms into full color and zooms slightly */
+/* Interactive Hover Feedback */
 body:not(.hide-ui) article.panel:not(.is-active):hover .panel__bg img {
     filter: brightness(0.65) grayscale(0%) !important;
     transform: scale(1.02) !important;
     transition: filter 0.4s ease-out, transform 0.4s ease-out !important;
 }
 
-/* 2. The vertical spine text slides UP and lights up */
 body:not(.hide-ui) article.panel:not(.is-active):hover .spine {
-    /* Because it is rotated 180deg, positive translateY visually pushes it UP */
     transform: translateX(-50%) rotate(180deg) translateY(30px) !important;
     color: var(--neon-gold) !important;
     opacity: 1 !important;
     transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
 }
 
-/* 3. The top index number also nudges up to match the kinetic energy */
 body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
     transform: translateX(-50%) translateY(-10px) !important;
     color: var(--neon-gold) !important;
@@ -1085,26 +1033,21 @@ body:not(.hide-ui) article.panel:not(.is-active):hover .panel__index {
     transition: transform 0.3s var(--ease-heavy), color 0.3s ease, opacity 0.3s ease !important;
 }
 
-/* ===========================================
-   INDIVIDUAL PROJECT MODALS
-   =========================================== */
-/* Keeps the project modal hidden by default, but ready */
+/* Individual Project Modals */
 .project-modal {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    z-index: 9999 !important; /* Forces it above the #work modal */
+    z-index: 9999 !important; 
     transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-/* Forces it to appear exactly like your work modal when clicked */
 .project-modal.is-active {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
 }
 
-/* Forces the inner content to appear when triggered by JS */
 .project-modal.is-active .modal__content {
     opacity: 1;
     transform: translateY(0);
