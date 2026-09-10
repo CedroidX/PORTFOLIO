@@ -1,4 +1,5 @@
-window.addEventListener('load', () => {
+// Change from 'load' to 'DOMContentLoaded' for progressive loading
+document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('intro-loader');
     const introImg = document.querySelector('.intro-img');
     const targetImg = document.getElementById('panel1-img');
@@ -14,6 +15,7 @@ window.addEventListener('load', () => {
     const otherPanels = document.querySelectorAll('.panel:not(#panel1)');
     otherPanels.forEach(p => p.classList.add('is-hidden-content'));
 
+    // 1. Hide the text after exactly 2 seconds (2000ms)
     setTimeout(() => {
         const introText = document.querySelector('.intro-text');
         
@@ -21,8 +23,9 @@ window.addEventListener('load', () => {
         
         introImg.style.transition = 'filter 0.5s ease-in-out';
         introImg.style.filter = 'brightness(0)';
-    }, 3200);
+    }, 2000); 
 
+    // 2. Start the morphing transition shortly after (e.g., 2.5 seconds)
     setTimeout(() => {
         loader.style.backgroundColor = 'transparent';
 
@@ -80,7 +83,7 @@ window.addEventListener('load', () => {
 
         }, 1000); 
 
-    }, 4200); 
+    }, 2500); 
 });
 
 // Click-to-Expand Logic

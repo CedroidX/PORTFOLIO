@@ -252,7 +252,6 @@ article.panel:last-child {
 }
 
 .details a {
-    pointer-events: auto !important;
     position: relative;
     z-index: 10;
 }
@@ -462,12 +461,10 @@ article.panel.is-active .panel__index {
 
 /* Modals */
 .modal-overlay {
-    position: fixed;
+position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(0, 0, 0, 0.900);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(17, 17, 17, 0.98); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -979,7 +976,7 @@ article.panel:nth-child(5) .spine { animation-delay: 1.0s; }
 /* Shockwave Cascade Effect */
 .panel.is-hidden-content .panel__bg {
     opacity: 0 !important;
-    filter: blur(20px) brightness(2) !important;
+    filter: brightness(2) !important; /* Removed blur(20px) */
     transform: scale(1.15) !important;
 }
 
