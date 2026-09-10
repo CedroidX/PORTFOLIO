@@ -735,7 +735,7 @@ article.panel.is-active .panel__index {
 .modal__image-caption {
     font-family: var(--font-mono);
     font-size: 0.65rem;
-    color: var(--steel);
+    color: white;
     text-align: center;
     margin: 0;
 }
